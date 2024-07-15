@@ -9,8 +9,8 @@ You must write an algorithm with O(log n) runtime complexity.
  * @returns 
  */
 
-export function searchInsert(nums: number[], target: number) {
-  const search = (left: number, right: number) => {
+export function searchInsertionPosition(nums: number[], target: number) {
+  const search = (left: number, right: number): number => {
     let midIndex = Math.floor((left + right) / 2);
     let midValue = nums[midIndex];
     if (midValue === target) {
