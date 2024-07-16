@@ -1,42 +1,40 @@
+export type Job = [number, number, number];
+
 export const MaximumProfit = function(startTime:  number[], endTime: number[], profit: number[]): number {
-  let n = startTime.length;
-  let noOverlaps = []; // array of indices with no overlaps
+  const n = startTime.length;
 
-  // calculate overlapping times
-  let i = 0;
-  while (i < n) {
-    let start = startTime[i];
-    let end = endTime[i];
-
-    let j = 0;
-    let doesNotOverlap: Array<number> = [];
-    while (j < n) {
-      let compareStart = startTime[j];
-      let compareEnd = endTime[j];
-      if (
-        j != i
-        && (compareStart >= end || compareEnd <= start)
-      ) {
-        doesNotOverlap.push(j);
+  const getChildren = (job: Job): Array<Job> => {
+    const children = [];
+    for (let i = 0; i < n; i++) {
+      if (job[1] <= startTime[i]) {
+        children.push([startTime[i], endTime[i], profit[i]] as Job);
       }
-      j++;
     }
-    noOverlaps.push(doesNotOverlap);
-    i++;
+    return children;
   }
-  console.log('indices with no overlaps', noOverlaps);
 
-  let largestProfit = 0;
-  const traverse = (node, parentIdx: number) => {
-    if (Array.isArray(node)) {
-      node.forEach((child, childIdx) => {
-        if (parentIdx !== childIdx) {
-          largestProfit += profit[child]
-          traverse(child, childIdx);
-        }
-      })
+  const traverseProfit = (job: Job, sum: number): number => {
+    let currentSum = sum + job[2];
+    let max = currentSum; // copy of current value for comparison
+
+    const children = getChildren(job);
+    children.forEach(child => {
+      const childSum = traverseProfit(child, currentSum);
+      if (childSum > max) {
+        max = childSum;
+      }
+    });
+
+    return max;
+  }
+
+  let maxProfit = 0;
+  for (let i = 0; i < n; i++) {
+    let job = [startTime[i], endTime[i], profit[i]];
+    let jobMax = traverseProfit(job as Job, 0)
+    if (jobMax > maxProfit) {
+      maxProfit = jobMax;
     }
   }
-  traverse(noOverlaps, 0);
-  return largestProfit;
+  return maxProfit;
 };

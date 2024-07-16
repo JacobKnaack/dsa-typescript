@@ -15,4 +15,11 @@ describe('Maximum Profit', () => {
     let result = MaximumProfit(startTime, endTime, profit);
     expect(result).toEqual(150);
   });
+  test('All Overlaps', () => {
+    let startTime = [1, 1, 1];
+    let endTime = [2, 3, 4];
+    let profit = [5, 6, 4];
+    let result = MaximumProfit(startTime, endTime, profit);
+    expect(result).toEqual(6);
+  });
 })
