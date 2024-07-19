@@ -15,7 +15,7 @@ export const MaximumProfit = function(startTime:  number[], endTime: number[], p
 
   const traverseProfit = (job: Job, sum: number): number => {
     let currentSum = sum + job[2];
-    let max = currentSum; // copy of current value for comparison
+    let max = currentSum;
 
     const children = getChildren(job);
     children.forEach(child => {
