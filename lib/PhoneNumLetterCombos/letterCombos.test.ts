@@ -1,7 +1,7 @@
 import letterCombinations from ".";
 
 describe('Phone number letter combinations', () => {
-  test('Should work for a small number', () => {
+  test('Should work for multiple numbers', () => {
     let input = '23';
     let expected: string[] = ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"];
 
